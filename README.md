@@ -1,4 +1,4 @@
-
+[![Build status](https://ci.appveyor.com/api/projects/status/oyj2l3n64km3k018?svg=true)](https://ci.appveyor.com/project/KateGaw/ra-hoc-highlight)
 
 https://kategaw.github.io/RA_hoc_highlight/
 
