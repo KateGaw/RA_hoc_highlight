@@ -19,20 +19,32 @@ function Popular(props) {
   );
 }
 
-const withHighlight = (ThisComponent) => {
-  function highlighter(props) {
+function withHighlight(Component) {
+  function withHighlight(props) {
     if (props.views < 100) {
-      return <New key={shortid.generate()}>{props.data}</New>;
+      return (
+        <New>
+          <Component {...props} />
+        </New>
+      );
     }
 
     if (props.views >= 1000) {
-      return <Popular key={shortid.generate()}>{props.data}</Popular>;
+      return (
+        <Popular>
+          <Component {...props} />
+        </Popular>
+      );
     }
 
-    return <div key={shortid.generate()}>{props.data}</div>;
+    return (
+      <div>
+        <Component {...props} />
+      </div>
+    );
   }
-  return highlighter({ data: ThisComponent, views: ThisComponent.props.views });
-};
+  return withHighlight;
+}
 
 function Article(props) {
   return (
@@ -60,14 +72,17 @@ function Video(props) {
   );
 }
 
+const VideoHighlight = withHighlight(Video);
+const ArticleHighlight = withHighlight(Article);
+
 function List(props) {
   return props.list.map((item) => {
     if (item.type === "video") {
-      return withHighlight(<Video {...item} />);
+      return <VideoHighlight key={shortid.generate()} {...item} />;
     }
 
     if (item.type === "article") {
-      return withHighlight(<Article {...item} />);
+      return <ArticleHighlight key={shortid.generate()} {...item} />;
     }
 
     return null;
